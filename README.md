@@ -1,0 +1,1 @@
+# Akilli_Ev_Veri_Analizi_ML
