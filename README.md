@@ -122,7 +122,7 @@ Bu ısı haritası Grafiğinde ise veride bulunan 15 tane cihazın günün saat 
 
 
 ### 7 - Sertifikalar
-<img src ="images/sertifika1.png" width="500"><img src ="images/sertifika2.png" width="500">
+<img src ="images/sertifika1.png" width="400"><img src ="images/sertifika2.png" width="400">
 
 
 
