@@ -1,6 +1,6 @@
 # Akilli_Ev_Veri_Analizi_ML
 
-Akıllı ev cihazlarının tüketim verilerine bakarak günün hangi saatinde olduğunu tahmin eden makine öğrenmesi projesi.
+Akıllı ev cihazlarının tüketim verilerine bakarak günün hangi saat diliminde olduğunu tahmin eden makine öğrenmesi projesi.
 
 ## Nasıl Çalışır
 
