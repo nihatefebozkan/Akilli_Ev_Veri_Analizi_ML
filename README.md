@@ -17,6 +17,8 @@ df["time"] = df["time"].astype("int64")
 df["time"] = pd.to_datetime(df["time"], unit="s")
 df["saat"] = df["time"].dt.hour
 ```
+Datayı yükledim. Zaman kolununu numeric değere çevirdim ve eksik değerleri temizledim ve zamanı tam sayıya çevirdim.
+Verideki time kısmını tarih saat formatına donusturdum. ve saat bilgisini çektim.
 
 ### 2 Saatleri Sabah - Öğle - Akşam diye 3 gruba ayırma 
 ```
@@ -30,9 +32,9 @@ def gun_dilimi(saat):
 
 df["gun_dilimi"] = df["saat"].apply(gun_dilimi)
 ```
+Projede pivot olarak saat dilimlerini kullanacağım için günü 3 e böldüm.
 
 ### Pivot Tablosu oluşturma
-not: pivot tablosu oluştururken tarih bilgisinden çektiğim saati kullandım mean komutu ile baseline olusturdum.
 ```
 pivot = df.pivot_table(
     index="gun_dilimi",
@@ -41,10 +43,21 @@ pivot = df.pivot_table(
 ).T.reindex(columns=["sabah", "ogle", "aksam"])
 ```
 
+pivot tablosu oluştururken saat bilgilerinden çektiğim gun dilimlerini kullandımve ```aggfunc= "mean"``` komutu ile baseline(ortalama) olusturdum.
+
+
 ### Model eğitimi
 HEDEF(Tahmin) : Gün dilimleri (Sabah - Öğle - Akşam)
 ```
 y = df["gun_dilimi"].map({"sabah": 0, "ogle": 1, "aksam": 2})
 ```
+
+### Terminal Çıktı 
+<img src ="images/ss1.png">
+
+
+### Heatmap Grafiği Çıktı
+
+
 
 
