@@ -1,6 +1,6 @@
 # Akilli_Ev_Veri_Analizi_ML
 
-Akıllı ev cihazlarının tüketim verilerine bakarak günün hangi saat diliminde olduğunu tahmin eden makine öğrenmesi projesi.
+Akıllı ev cihazlarının tüketim verilerine bakarak cihazların harcadığı enerjilere bakarak günün hangi zaman diliminde olduğunu tahmin eden ve bu değerlerin ortalama değerlerle ilişkisini ölçüyor.
 
 ## Nasıl Çalışır
 
@@ -73,7 +73,38 @@ models = {"knn": knn, "random forest": rf}
 ```
 Knn ve Random Forest modeli eğitim kodu
 
-### 5 - Terminal Çıktı 
+### 5 - Tahmin
+
+```
+yeni_veri = [[0.5, 1.2, 0.3, 0.1, 0.8, 0.2, 0.0, 0.4, 0.3, 0.2, 0.1, 0.5, 0.2, 0.6, 2.1]]
+
+# tahmin yap
+tahmin = rf.predict(yeni_veri)
+sonuc = ["sabah", "ogle", "aksam"][tahmin[0]]
+print(f"tahmin edilen zaman: {sonuc}\n")
+
+# tahmin edilen zamana gore karsilastir
+print(f"--- {sonuc} ortalamasina gore durum ---\n")
+```
+Tahmin kısmında 15 cihaz için ayrı ayrı veri girişi yapıyoruz ve girilen enerji tuketim değerlerine göre günün hangi zaman diliminde olduğunu tahmin ediyoruz.
+```
+for i, cihaz in enumerate(cols):
+    girilen = yeni_veri[0][i]
+    ortalama = pivot.loc[cihaz, sonuc]
+    
+    # durum hesapla
+    if girilen > ortalama * 1.1:
+        durum = "fazla"
+    elif girilen < ortalama * 0.9:
+        durum = "az"
+    else:
+        durum = "normal"
+    
+    print(f"{cihaz}: {girilen:.2f} kw (ort: {ortalama:.2f}) - {durum}")
+```
+Burada ise tahmin edilen zaman dilimine göre pivottan alınan normal değerle ilişkisini hesaplayarak tüketimin fazla,normal veya az olmasını inceliyor 
+
+### 6 - Terminal Çıktı 
 <img src ="images/ss1.png">
 Bu çıktıda görüleceği üzere cihazların günün dilimleri içinde ne kadar enerji harcadığı ve model eğitimi sonucunda başarı oranları görüntülenmiştir.
 
@@ -81,9 +112,13 @@ KNN MODELİ : %75
 
 RANDOM FOREST MODELİ : %67
 
-### 6 - Heatmap Grafiği Çıktı
+<img src="images/ss3.png">
+Bu çıktıda göreceğiniz üzere benim girdiğim rastgee değerlere göre modeller hangi zaman diliminde olduğunun tahminini yapmış ve bunun pivot değerlerle ilişkisini değerlendiriyor.
+
+### 7 - Heatmap Grafiği Çıktı
 <img src ="images/ss2.png">
 Bu ısı haritası Grafiğinde ise veride bulunan 15 tane cihazın günün saat dilimlerine göre harcadığı enerji miktarını görselleştirdim. Yaptığım analizler doğrultusunda Bazı cihazların gün içinde kullanımının arttığı(Furnace1,Furnace2,Kitchen14,Livingroom) Bazılarının ise saat farketmeksizin devamlı bir şekilde ortalama hep aynı miktarı harcadığını gözlemledim(Fridge,Solar,Kitchen12,Well)
+
 
 
 
