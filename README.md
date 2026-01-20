@@ -79,20 +79,17 @@ Knn ve Random Forest modeli eğitim kodu
 yeni_veri = [[0.5, 1.2, 0.3, 0.1, 0.8, 0.2, 0.0, 0.4, 0.3, 0.2, 0.1, 0.5, 0.2, 0.6, 2.1]]
 
 # tahmin yap
-tahmin = rf.predict(yeni_veri)
-sonuc = ["sabah", "ogle", "aksam"][tahmin[0]]
-print(f"tahmin edilen zaman: {sonuc}\n")
-
-# tahmin edilen zamana gore karsilastir
-print(f"--- {sonuc} ortalamasina gore durum ---\n")
+tahmin_knn = knn.predict(yeni_veri)
+sonuc_knn = ["sabah", "ogle", "aksam"][tahmin_knn[0]]
+print(f"knn tahmini: {sonuc_knn}\n")
 ```
 Tahmin kısmında 15 cihaz için ayrı ayrı veri girişi yapıyoruz ve girilen enerji tuketim değerlerine göre günün hangi zaman diliminde olduğunu tahmin ediyoruz.
 ```
+print(f"\n--- knn: {sonuc_knn} ortalamasina gore ---\n")
 for i, cihaz in enumerate(cols):
     girilen = yeni_veri[0][i]
-    ortalama = pivot.loc[cihaz, sonuc]
-    
-    # durum hesapla
+    ortalama = pivot.loc[cihaz, sonuc_knn]
+    #durum degerlendir 
     if girilen > ortalama * 1.1:
         durum = "fazla"
     elif girilen < ortalama * 0.9:
@@ -102,7 +99,7 @@ for i, cihaz in enumerate(cols):
     
     print(f"{cihaz}: {girilen:.2f} kw (ort: {ortalama:.2f}) - {durum}")
 ```
-Burada ise tahmin edilen zaman dilimine göre pivottan alınan normal değerle ilişkisini hesaplayarak tüketimin fazla,normal veya az olmasını inceliyor 
+Burada ise tahmin edilen zaman dilimine göre pivottan alınan normal değerle ilişkisini hesaplayarak tüketimin fazla,normal veya az olmasını inceliyor ve terminale yazdiriyoruz.
 
 ### 6 - Terminal Çıktı 
 <img src ="images/ss1.png">
@@ -113,7 +110,9 @@ KNN MODELİ : %75
 RANDOM FOREST MODELİ : %67
 
 <img src="images/ss3.png">
-Bu çıktıda göreceğiniz üzere benim girdiğim rastgee değerlere göre modeller hangi zaman diliminde olduğunun tahminini yapmış ve bunun pivot değerlerle ilişkisini değerlendiriyor.
+Bu çıktıda göreceğiniz üzere benim girdiğim rastgee değerlere göre başarı oranı daha yüksek olan knn modeli ile hangi zaman diliminde olduğunun tahminini yapmış ve bunun pivot değerlerle ilişkisini değerlendiriyorum.
+
+
 
 ### 7 - Heatmap Grafiği Çıktı
 <img src ="images/ss2.png">
