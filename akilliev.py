@@ -103,7 +103,7 @@ tahmin_knn = knn.predict(yeni_veri)
 sonuc_knn = ["sabah", "ogle", "aksam"][tahmin_knn[0]]
 print(f"tahmin edilen zaman: {sonuc_knn}\n")
 
-print(f"\n--- knn: {sonuc_knn} ortalamasina gore durum ---\n")
+print(f"\n--- {sonuc_knn} ortalamasina gore durum ---\n")
 for i, cihaz in enumerate(cols):
     girilen = yeni_veri[0][i]
     ortalama = pivot.loc[cihaz, sonuc_knn]
@@ -115,4 +115,5 @@ for i, cihaz in enumerate(cols):
     else:
         durum = "normal"
     
+
     print(f"{cihaz}: {girilen:.2f} kw (ort: {ortalama:.2f}) - {durum}")
